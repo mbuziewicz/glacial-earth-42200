@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 //mongoose.connect("mongodb://localhost:27017/node-blog")
+//Added connection to mlab in heroku
 mongoose.connect("mongodb://dbuser:dbpassword1@ds233288.mlab.com:33288/heroku_hpvbn9qq");
 
 var bodyParser = require('body-parser');
