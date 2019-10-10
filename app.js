@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
      postData.save().then( result => {
          res.redirect('/');
      }).catch(err => {
-         res.status(400).send("Unable to save data");
+         res.status(400).send("Something went wrong. Unable to save data");
      });
  });
  
