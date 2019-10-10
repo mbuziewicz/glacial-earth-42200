@@ -1,0 +1,16 @@
+<html>
+    <head></head>
+    <body>
+        <h1>Products</h1>
+        <a href="/">Main</a>
+        <% for(let i = 0; i < products.length; i++) { %>
+            <article>
+                <p><%= products[i].body %></p>
+            </article>
+        <% } %>
+        <form action="addproduct" method="POST">
+            <textarea name="body"></textarea>
+            <input type="submit" value="Add Product" />
+        </form>
+    </body>
+</html>
