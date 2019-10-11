@@ -13,7 +13,7 @@ app.set('view engine', 'html');
 var postSchema = new mongoose.Schema({ body: String });
 var Post = mongoose.model('Post', postSchema);
 
-var productSchema = new mongoose.Schema({ body: String });
+var productSchema = new mongoose.Schema({ name: String, description: String, price: Number, qty: Number, img: String });
 var Product = mongoose.model('Product', productSchema);
 
 
@@ -47,8 +47,8 @@ app.get("/", (req, res) => {
      });
  });
 
- 
+ var PORT = 5000;
  // Listen
-app.listen(process.env.PORT || 5000, () => {
-    console.log('Server listing on 3000');
+app.listen(process.env.PORT || PORT, () => {
+    console.log('Server listing on ' + PORT);
 })

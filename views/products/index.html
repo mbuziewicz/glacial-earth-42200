@@ -3,14 +3,39 @@
     <body>
         <h1>Products</h1>
         <a href="/">Main</a>
-        <% for(let i = 0; i < products.length; i++) { %>
-            <article>
-                <p><%= products[i].body %></p>
-            </article>
-        <% } %>
+        <table>
+            <thead>
+                <tr>
+                    <th>name</th>
+                    <th>description</th>
+                    <th>price</th>
+                    <th>qty</th>
+                    <th>img</th>          
+                </tr>
+            </thead>
+        <tbody>
+            <% for(let i = 0; i < products.length; i++) { %>
+                <tr>
+                        <td><%= products[i].name %></td>
+                        <td><%= products[i].description %></td>
+                        <td><%= products[i].price %></td>
+                        <td><%= products[i].qty %></td>
+                        <td><%= products[i].img %></td>
+                    </tr>
+            <% } %>
+    
         <form action="addproduct" method="POST">
-            <textarea name="body"></textarea>
-            <input type="submit" value="Add Product" />
+            <tr>
+            <td><textarea name="name"></textarea></td>
+            <td><textarea name="description"></textarea></td>
+            <td><textarea name="price"></textarea></td>
+            <td><textarea name="qty"></textarea></td>
+            <td><textarea name="img"></textarea></td>
+            <td><input type="submit" value="Add Product" /></td>
+        </tr>
         </form>
-    </body>
+    </tbody>
+</table>
+
+</body>
 </html>
