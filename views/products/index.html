@@ -1,5 +1,15 @@
 <html>
-    <head></head>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function(){
+              $("button").click(function(){
+                $("#add_form").toggle();
+              });
+            });
+            </script>
+
+    </head>
     <body>
         <h1>Products</h1>
         <a href="/">Main</a>
@@ -20,12 +30,12 @@
                         <td><%= products[i].description %></td>
                         <td><%= products[i].price %></td>
                         <td><%= products[i].qty %></td>
-                        <td><%= products[i].img %></td>
+                        <td><img width=100px src="<%= products[i].img %>"></td>
                     </tr>
             <% } %>
-    
+    <div id="product_form">
         <form action="addproduct" method="POST">
-            <tr>
+            <tr id="add_form">
             <td><textarea name="name"></textarea></td>
             <td><textarea name="description"></textarea></td>
             <td><textarea name="price"></textarea></td>
@@ -34,7 +44,9 @@
             <td><input type="submit" value="Add Product" /></td>
         </tr>
         </form>
-    </tbody>
+    </div>
+    <button>Remove div element</button>
+</tbody>
 </table>
 
 </body>
