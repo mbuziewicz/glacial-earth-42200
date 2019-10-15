@@ -57,7 +57,7 @@ $('.add-to-cart').on('click', function () {
 
             <style>
                 body {
-                    background-color: rgb(230, 240, 252);
+                    background-color: #F2EEE9;
                     color: #333;
                     min-width: 600px;
                 }
@@ -73,10 +73,10 @@ $('.add-to-cart').on('click', function () {
                 }
 
                 button {
-                    border: 1px solid rgb(27, 15, 13);
+                    border: 1px solid #722A1B;
                     padding: 14px;
                     background-color: #fff;
-                    color: rgb(138, 64, 51);
+                    color: #722A1B;
                     text-transform: uppercase;
                     margin: 10px;
                     font-weight: bold;
@@ -95,7 +95,7 @@ $('.add-to-cart').on('click', function () {
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="/products">Products</a>
+                <a class="navbar-brand" href="#">Products</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -120,53 +120,12 @@ $('.add-to-cart').on('click', function () {
                
         <div class="container">
             <div class="row">       
-                    <% var cards = 0; %>
-                    <% var total_rows = 0; %>
-                    <% var total_items = products.length  %>
-
-            <% for(let i = 0; i < products.length; i++) { %>
-                <% cards = cards + 1; %>
                 <div class="col-sm">
-                        <div class="card item" style="width: 18rem;">
-                        <img src="<%= products[i].img %>" class="card-img-top" alt="item">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= products[i].name %></h5>
-                            <p class="card-text">Description: <%= products[i].description %></p>
-                            <p class="card-text">Price: <em> $<%= products[i].price %></em></p>
-                            
-                        </div>
-
-                        <button class="add-to-cart" type="button">Add to cart</button>
-                    </div>
-
+                            No Products found.                            
                 </div>
-            <!--/ class col-sm -->      
-            <% if (cards > 2) { %>
-            <% total_rows = total_rows + 1; %>
             </div>
-                <!--/ row -->
-                <div class="row">
-            <% cards = 0 }%>
-    
-            <% } %>
-
-            <% var whats_left = total_items - (total_rows * 3) %>
-            <% //console.log(whats_left); %>
-
-            <% if (whats_left == 1) { %>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                    </div>
-        <% } %>
-            <% if (whats_left == 2) { %>
-                <div class="col-sm">
-                    </div>
-            <% } %>
-            </div>
-   
-        <!--/ row -->
+            <!--/ row -->
         </div>
-<!--/ container -->
+        <!--/ container -->
 </body>
 </html>
