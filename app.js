@@ -1,8 +1,12 @@
+
+
+
 // Setup
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://dbuser:dbpassword1@ds233288.mlab.com:33288/heroku_hpvbn9qq", { useUnifiedTopology: true }, { useNewUrlParser: true });
+
+mongoose.connect("mongodb://dbuser:dbpassword1@ds233288.mlab.com:33288/heroku_hpvbn9qq",{ useNewUrlParser: true })
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
