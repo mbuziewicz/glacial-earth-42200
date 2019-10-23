@@ -2,13 +2,16 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://dbuser:dbpassword1@ds233288.mlab.com:33288/heroku_hpvbn9qq");
+mongoose.connect("mongodb://dbuser:dbpassword1@ds233288.mlab.com:33288/heroku_hpvbn9qq", { useUnifiedTopology: true }, { useNewUrlParser: true });
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
+
+var path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 
 var postSchema = new mongoose.Schema({ body: String });
 var Post = mongoose.model('Post', postSchema);
