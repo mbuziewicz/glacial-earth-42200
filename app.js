@@ -39,22 +39,6 @@ app.get("/", (req, res) => {
          res.status(400).send("Something went wrong. Unable to save data");
      });
  });
- 
-
-/*
-app.get("/", function(req, res) {
-    if (req.query.search) {
-       const regex = new RegExp(escapeRegex(req.query.search), 'gi');
-       Jobs.find({ name: regex }, function(err, foundjobs) {
-           if(err) {
-               console.log(err);
-           } else {
-              res.render("jobs/index", { jobs: foundjobs });
-           }
-       }); 
-    }
-}
-*/
 
 app.get("/products", function(req, res){
     if (req.query.search) {

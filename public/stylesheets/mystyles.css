@@ -1,6 +1,5 @@
-<style>
 body {
-    background-color: #F2EEE9;
+    background-color: blue; /*#F2EEE9; */
     color: #333;
     min-width: 600px;
 }
@@ -33,5 +32,3 @@ button {
     margin: 0px 40px 0 0;
     padding: 40px;
 }
-
-</style>
