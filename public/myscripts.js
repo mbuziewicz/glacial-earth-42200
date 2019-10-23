@@ -6,7 +6,7 @@
 */   
 $(document).ready(function(){
 $('.add-to-cart').on('click', function () {
-    //alert("I am an alert box!");
+    alert("I am an alert box!");
         var cart = $('.shopping-cart');
         var imgtodrag = $(this).parent('.item').find("img").eq(0);
         if (imgtodrag) {
