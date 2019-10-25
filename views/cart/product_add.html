@@ -1,0 +1,59 @@
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function(){
+              $("button").click(function(){
+                $("#add_form").toggle();
+              });
+            });
+            </script>
+
+            <style>
+                #add_form { display: none;}
+            </style>
+    </head>
+    <body>
+        <div class="container">
+        <h1>Products</h1>
+        <a href="/">Main</a>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>name</th>
+                    <th>description</th>
+                    <th>price</th>
+                    <th>qty</th>
+                    <th>img</th>          
+                    <th></th>          
+                </tr>
+            </thead>
+        <tbody>
+            <% for(let i = 0; i < products.length; i++) { %>
+                <tr>
+                        <td><%= products[i].name %></td>
+                        <td><%= products[i].description %></td>
+                        <td><%= products[i].price %></td>
+                        <td><%= products[i].qty %></td>
+                        <td><img width=100px src="<%= products[i].img %>"></td>
+                    </tr>
+            <% } %>
+    <div id="product_form" > 
+        <form action="addproduct" method="POST">
+            <tr id="add_form">
+            <td><textarea name="name"></textarea></td>
+            <td><textarea name="description"></textarea></td>
+            <td><textarea name="price"></textarea></td>
+            <td><textarea name="qty"></textarea></td>
+            <td><textarea name="img"></textarea></td>
+            <td><input class="btn btn-dark" type="submit" value="Add Product" /></td>
+        </tr>
+        </form>
+    </div>
+</tbody>
+</table>
+<button>Add Product</button>
+</div>
+</body>
+</html>
