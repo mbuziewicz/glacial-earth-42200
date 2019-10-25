@@ -58,7 +58,19 @@ app.get("/products", function(req, res){
           res.render("products/index",{products:allProducts});
        }
     });
+
 });
+ 
+ 
+ app.get("/cart", (req, res) => {
+    Product.find({}, (err, products) => {
+       res.render('cart/cart', { products: products})
+    });
+    console.log(req.query.search)
+ });
+ 
+
+
  
 
  /*
