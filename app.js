@@ -50,7 +50,7 @@ app.get("/products", function(req, res){
        }
     }); 
     }
-
+else{
   Product.find({}, function(err, allProducts){
        if(err){
            console.log(err);
@@ -59,7 +59,9 @@ app.get("/products", function(req, res){
        }
     });
 
+}
 });
+
  
  
  app.get("/cart", (req, res) => {

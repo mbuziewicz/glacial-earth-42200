@@ -29,7 +29,7 @@
            
         <div class="clear"></div>
                
-        <div class="container">
+        <div class="container cart">
             <div class="row">       
                 <div class="col-sm">
                     <table class="table table-striped">
@@ -39,7 +39,7 @@
                         <% for(let i = 0; i < products.length; i++) { %>
                             <tr>
                                 <td>
-                                    <img width=100px height="100px" src="<%= products[i].img %>" >
+                                    <img src="<%= products[i].img %>" >
                                     <%= products[i].name %>
                                     Description: <%= products[i].description %>
                                     Price: $<%= products[i].price %>
