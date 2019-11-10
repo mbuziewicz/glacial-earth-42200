@@ -1,0 +1,92 @@
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+            <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+            <script src="https://code.jquery.com/ui/1.8.5/jquery-ui.min.js" integrity="sha256-fOse6WapxTrUSJOJICXXYwHRJOPa6C1OUQXi7C9Ddy8=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.compatibility.js"></script>
+
+  <link rel="stylesheet" href="/stylesheets/mystyles.css">
+  <script src='/myscripts.js'></script>
+
+
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="/products">Products</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                  <ul class="navbar-nav">
+                        <li class="nav-item">
+                                <a class="nav-link" href="/">Main</a>
+                        </li>
+                    </ul>
+            </div>
+            <form action="/products" method="GET" class="form-inline navbar-right">
+            <div class="form-group">
+                    <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </div>
+            </form>
+            <a href="/cart"><i class="shopping-cart"></i></span></a>
+        </nav>
+
+           
+        <div class="clear"></div>
+               
+        <div class="container">
+            <div class="row">       
+                    <% var cards = 0; %>
+                    <% var total_rows = 0; %>
+                    <% var total_items = products.length  %>
+
+            <% for(let i = 0; i < products.length; i++) { %>
+                <% cards = cards + 1; %>
+                <div class="col-sm">
+                        <div class="card item" style="width: 18rem;">
+                        <img src="<%= products[i].img %>" class="card-img-top" alt="item">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= products[i].name %></h5>
+                            <p class="card-text">Description: <%= products[i].description %></p>
+                            <p class="card-text">Price: <em> $<%= products[i].price %></em></p>
+                            
+                        </div>
+
+                        <button class="add-to-cart" type="button">Add to cart</button>
+                    </div>
+
+                </div>
+            <!--/ class col-sm -->      
+            <% if (cards > 2) { %>
+            <% total_rows = total_rows + 1; %>
+            </div>
+                <!--/ row -->
+                <div class="row">
+            <% cards = 0 }%>
+    
+            <% } %>
+
+            <% var whats_left = total_items - (total_rows * 3) %>
+            <% //console.log(whats_left); %>
+
+            <% if (whats_left == 1) { %>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                    </div>
+        <% } %>
+            <% if (whats_left == 2) { %>
+                <div class="col-sm">
+                    </div>
+            <% } %>
+            </div>
+   
+        <!--/ row -->
+        </div>
+<!--/ container -->
+</body>
+</html>

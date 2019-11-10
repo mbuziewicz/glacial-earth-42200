@@ -1,6 +1,4 @@
 
-
-
 // Setup
 var express = require('express');
 var app = express();
@@ -24,6 +22,11 @@ var productSchema = new mongoose.Schema({ name: String, description: String, pri
 var Product = mongoose.model('Product', productSchema);
 
 
+//import products from "./routes/products"
+//var products = "./routes/products"
+//app.use("/products", products);
+
+
 // Routes
 app.get("/", (req, res) => {
     Post.find({}, (err, posts) => {
@@ -31,11 +34,31 @@ app.get("/", (req, res) => {
     });
  });
 
+// app.get("/products_crud", (req, res) => {
+ //   res.redirect('products_crud/');
+//});
+
+app.get("/products_crud", (req, res, next) => {
+    Product.find({})
+        .exec()
+        .then(docs => {
+            /////res.status(200).json({
+            /////    docs
+            /////});
+            res.render('products_crud/product_view',{
+                products: docs
+              });
+        })
+        .catch(err => {
+            console.log(err)
+        });
+});
+
  app.post('/addpost', (req, res) => {
      var postData = new Post(req.body);
      postData.save().then( result => {
-         res.redirect('/');
-     }).catch(err => {
+        res.redirect('/');
+    }).catch(err => {
          res.status(400).send("Something went wrong. Unable to save data");
      });
  });
