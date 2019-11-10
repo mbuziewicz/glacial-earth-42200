@@ -54,6 +54,75 @@ app.get("/products_crud", (req, res, next) => {
         });
 });
 
+
+app.post("/products_crud/add", (req, res, next) => {
+
+    const product = new Product({
+        _id: mongoose.Types.ObjectId(),
+        name: req.body.name,
+        img: req.body.img,
+        description: req.body.description,
+        price: req.body.price 
+    });
+
+    product.save()
+    .then(result => {
+        ///res.status(200).json({
+        ///    docs:[product],
+        ///});
+        res.redirect('/products_crud');
+
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
+
+  //route for update data
+ app.post('/products_crud/update',(req, res) => {
+      let product = {};  //create empty object for product updates
+      product.name = req.body.name;
+      product.img = req.body.img;
+      product.price = req.body.price;
+      product.description = req.body.description;
+    const rid = req.body.product_id;
+    let query = {_id: rid}
+    console.log(query)
+
+    // Find note and update it with the request body
+    Product.updateOne(query, product, function(err) {
+        if (err){
+            console.log(err);
+            return;
+        }else{
+            res.redirect('/products_crud');
+        }
+        });
+    
+  });
+
+
+app.post("/products_crud/delete", (req, res, next) => {
+    const rid = req.body.product_id2;
+    console.log(rid)
+    
+    Product.findById(rid)
+        .exec()
+        .then(docs => {
+            docs.remove();
+            ////res.status(200).json({
+            ////    deleted:true
+            ////});
+            res.redirect('/products_crud');
+        })
+        .catch(err => {
+            console.log(err)
+        });
+});
+
+
+/*  Add post from first page.  This needs to go */
  app.post('/addpost', (req, res) => {
      var postData = new Post(req.body);
      postData.save().then( result => {
@@ -62,6 +131,9 @@ app.get("/products_crud", (req, res, next) => {
          res.status(400).send("Something went wrong. Unable to save data");
      });
  });
+
+
+
 
 app.get("/products", function(req, res){
     if (req.query.search) {
@@ -107,7 +179,7 @@ else{
  });
  */
 
-
+/*
  app.get("/product_add", (req, res) => {
     Product.find({}, (err, products) => {
         res.render('products/product_add', { products: products})
@@ -125,6 +197,8 @@ else{
          console.log(err);
      });
  });
+*/
+
 
  var PORT = 5000;
  // Listen

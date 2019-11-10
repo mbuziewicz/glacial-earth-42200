@@ -12,33 +12,36 @@
         <tr>
           <th>Product ID</th>
           <th>Product Name</th>
+          <th>Image</th>
           <th>Price</th>
-          <th>Action</th>
+          <th>Description</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
           <% for(let i = 0; i < products.length; i++) { %>
-         {{#each results}}
+         
         <tr>
-          <td>{{ _id }}<%= products[i]._id %></td>
-          <td>{{ imagePath }}<%= products[i].imagePath %></td>
-          <td>{{ title }}<%= products[i].title %></td>
+          <td><%= products[i]._id %></td>
+          <td><%= products[i].name %></td>
+          <td><%= products[i].img %></td>
+          <td><%= products[i].price %></td>
+          <td><%= products[i].description %></td>
           <td>
-            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="{{ _id }}" data-imagepath="{{ imagePath }}" data-title="{{ title }}">Edit</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="<%= products[i]._id %>" data-name="<%= products[i].name %>"  data-img="<%= products[i].img %>" data-price="<%= products[i].price %>" data-description="<%= products[i].description %>">Edit</a>
           </td>
           <td>
-            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{ _id }}">Delete</a>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="<%= products[i]._id %>">Delete</a>
           </td>
         </tr>
-        {{/each}}
+       
         <% } %>
       </tbody>
     </table>
   </div>
 
 	<!-- Add New Product Modal-->
-	  <form action="/products/add" method="post">
+	  <form action="/products_crud/add" method="post">
         <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
          <div class="modal-dialog" role="document">
            <div class="modal-content">
@@ -49,14 +52,21 @@
                </button>
              </div>
              <div class="modal-body">
-               <div class="form-group">
-                   <input type="text" name="imagePath" class="form-control" placeholder="imagePath" required>
-               </div>
+              <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="name" required>
+            </div>
 
-               <div class="form-group">
-                   <input type="text" name="title" class="form-control" placeholder="title" required>
-               </div>
-             </div>
+            <div class="form-group">
+                <input type="text" name="img" class="form-control" placeholder="img" required>
+            </div>
+            <div class="form-group">
+              <input type="text" name="price" class="form-control" placeholder="price" required>
+          </div>
+
+          <div class="form-group">
+              <input type="text" name="description" class="form-control" placeholder="description" required>
+          </div>
+     </div>
              <div class="modal-footer">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                <button type="submit" class="btn btn-primary">Save</button>
@@ -67,7 +77,7 @@
 	 </form>
 
 	 <!-- Edit Product Modal-->
-   <form action="/products/update" method="post">
+   <form action="/products_crud/update" method="post">
        <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -79,13 +89,20 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                  <input type="text" name="imagePath" class="form-control imagePath" placeholder="imagePath" required>
-              </div>
-
-              <div class="form-group">
-                  <input type="text" name="title" class="form-control title" placeholder="title" required>
-              </div>
+                <input type="text" name="name" class="form-control name" placeholder="name" required>
             </div>
+
+            <div class="form-group">
+                <input type="text" name="img" class="form-control img" placeholder="img" required>
+            </div>
+            <div class="form-group">
+              <input type="text" name="price" class="form-control price" placeholder="price" required>
+          </div>
+
+          <div class="form-group">
+              <input type="text" name="description" class="form-control description" placeholder="description" required>
+          </div>
+      </div>
             <div class="modal-footer">
               <input type="text" name="product_id" class="product_id">
               &nbsp;&nbsp;
@@ -98,7 +115,7 @@
   </form>
 
 	 <!-- Delete Product Modal-->
- 	  <form id="add-row-form" action="/products/delete" method="post">
+ 	  <form id="add-row-form" action="/products_crud/delete" method="post">
  	     <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  	        <div class="modal-dialog">
  	           <div class="modal-content">
@@ -131,12 +148,16 @@
 	//showing data to modal for edit record
       $('#mytable').on('click','.edit',function(){
         var product_id = $(this).data('id');
-        var imagePath = $(this).data('imagepath');
-        var title = $(this).data('title');
+        var name = $(this).data('name');
+        var img = $(this).data('img');
+        var price = $(this).data('price');
+        var description = $(this).data('description');
         $('#EditModal').modal('show');
 
-        $('.title').val(title);
-        $('.imagePath').val(imagePath);
+        $('.name').val(name);
+        $('.img').val(img);
+        $('.price').val(price);
+        $('.description').val(description);
         $('.product_id').val(product_id);
       });
 
