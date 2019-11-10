@@ -102,12 +102,12 @@ app.use(function(req, res, next) {
 
     Product.findById(productId, function (err, product) {
         if(err) {
-            return res.redirect('/');
+            return res.redirect('/products');
         }
         cart.add(product, product.id);
         req.session.cart = cart;
         console.log(req.session.cart);
-        res.redirect('/');
+        res.redirect('/products');
     })
 });
 
