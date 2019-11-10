@@ -45,7 +45,7 @@ app.get("/products_crud", (req, res, next) => {
             /////res.status(200).json({
             /////    docs
             /////});
-            res.render('products_crud/product_view',{
+            res.render('products_crud/index',{
                 products: docs
               });
         })

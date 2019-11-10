@@ -1,92 +1,155 @@
-<html>
-    <head>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-            <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-            <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-            <script src="https://code.jquery.com/ui/1.8.5/jquery-ui.min.js" integrity="sha256-fOse6WapxTrUSJOJICXXYwHRJOPa6C1OUQXi7C9Ddy8=" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.compatibility.js"></script>
-
-  <link rel="stylesheet" href="/stylesheets/mystyles.css">
-  <script src='/myscripts.js'></script>
-
-
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="/products">Products</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                  <ul class="navbar-nav">
-                        <li class="nav-item">
-                                <a class="nav-link" href="/">Main</a>
-                        </li>
-                    </ul>
-            </div>
-            <form action="/products" method="GET" class="form-inline navbar-right">
-            <div class="form-group">
-                    <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </div>
-            </form>
-            <a href="/cart"><i class="shopping-cart"></i></span></a>
-        </nav>
-
-           
-        <div class="clear"></div>
-               
-        <div class="container">
-            <div class="row">       
-                    <% var cards = 0; %>
-                    <% var total_rows = 0; %>
-                    <% var total_items = products.length  %>
-
-            <% for(let i = 0; i < products.length; i++) { %>
-                <% cards = cards + 1; %>
-                <div class="col-sm">
-                        <div class="card item" style="width: 18rem;">
-                        <img src="<%= products[i].img %>" class="card-img-top" alt="item">
-                        <div class="card-body">
-                            <h5 class="card-title"><%= products[i].name %></h5>
-                            <p class="card-text">Description: <%= products[i].description %></p>
-                            <p class="card-text">Price: <em> $<%= products[i].price %></em></p>
-                            
-                        </div>
-
-                        <button class="add-to-cart" type="button">Add to cart</button>
-                    </div>
-
-                </div>
-            <!--/ class col-sm -->      
-            <% if (cards > 2) { %>
-            <% total_rows = total_rows + 1; %>
-            </div>
-                <!--/ row -->
-                <div class="row">
-            <% cards = 0 }%>
-    
-            <% } %>
-
-            <% var whats_left = total_items - (total_rows * 3) %>
-            <% //console.log(whats_left); %>
-
-            <% if (whats_left == 1) { %>
-                <div class="col-sm">
-                </div>
-                <div class="col-sm">
-                    </div>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CRUD Node.js and Mysql</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<body>
+  <div class="container">
+    <h2>Products List</h2>
+		<button class="btn btn-success" data-toggle="modal" data-target="#myModalAdd">Add New</button>
+    <table class="table table-striped" id="mytable">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Action</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+          <% for(let i = 0; i < products.length; i++) { %>
+         {{#each results}}
+        <tr>
+          <td>{{ _id }}<%= products[i]._id %></td>
+          <td>{{ imagePath }}<%= products[i].imagePath %></td>
+          <td>{{ title }}<%= products[i].title %></td>
+          <td>
+            <a href="javascript:void(0);" class="btn btn-sm btn-info edit" data-id="{{ _id }}" data-imagepath="{{ imagePath }}" data-title="{{ title }}">Edit</a>
+          </td>
+          <td>
+            <a href="javascript:void(0);" class="btn btn-sm btn-danger delete" data-id="{{ _id }}">Delete</a>
+          </td>
+        </tr>
+        {{/each}}
         <% } %>
-            <% if (whats_left == 2) { %>
-                <div class="col-sm">
-                    </div>
-            <% } %>
-            </div>
-   
-        <!--/ row -->
+      </tbody>
+    </table>
+  </div>
+
+	<!-- Add New Product Modal-->
+	  <form action="/products/add" method="post">
+        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Add New Product</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+             </div>
+             <div class="modal-body">
+               <div class="form-group">
+                   <input type="text" name="imagePath" class="form-control" placeholder="imagePath" required>
+               </div>
+
+               <div class="form-group">
+                   <input type="text" name="title" class="form-control" placeholder="title" required>
+               </div>
+             </div>
+             <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Save</button>
+             </div>
+           </div>
+         </div>
         </div>
-<!--/ container -->
+	 </form>
+
+	 <!-- Edit Product Modal-->
+   <form action="/products/update" method="post">
+       <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <input type="text" name="imagePath" class="form-control imagePath" placeholder="imagePath" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="text" name="title" class="form-control title" placeholder="title" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input type="text" name="product_id" class="product_id">
+              &nbsp;&nbsp;
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </div>
+        </div>
+       </div>
+  </form>
+
+	 <!-- Delete Product Modal-->
+ 	  <form id="add-row-form" action="/products/delete" method="post">
+ 	     <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	        <div class="modal-dialog">
+ 	           <div class="modal-content">
+ 	               <div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">Delete Product</h5>
+ 	                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ 	               </div>
+ 	               <div class="modal-body">
+						<strong>Are You Sure To Delete This Data?</strong>
+ 	               </div>
+ 	               <div class="modal-footer">
+						<input type="hidden" name="product_id2" class="form-control product_id2" required>
+ 	                   	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 	                  	<button type="submit" class="btn btn-success">Delete</button>
+ 	               </div>
+ 	      		</div>
+ 	        </div>
+ 	     </div>
+ 	 </form>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+
+
+	//showing data to modal for edit record
+      $('#mytable').on('click','.edit',function(){
+        var product_id = $(this).data('id');
+        var imagePath = $(this).data('imagepath');
+        var title = $(this).data('title');
+        $('#EditModal').modal('show');
+
+        $('.title').val(title);
+        $('.imagePath').val(imagePath);
+        $('.product_id').val(product_id);
+      });
+
+
+
+	//showing modal for delete record
+	  $('#mytable').on('click','.delete',function(){
+        var product_id2 = $(this).data('id');
+        $('#DeleteModal').modal('show');
+        $('.product_id2').val(product_id2);
+      });
+
+    });
+</script>
 </body>
 </html>
