@@ -7,6 +7,60 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://dbuser:dbpassword1@ds233288.mlab.com:33288/heroku_hpvbn9qq",{ useNewUrlParser: true })
 
 var bodyParser = require('body-parser');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var session  = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
+var validator = require('express-validator');
+//exports a MongoStore to use.  Set up the session.
+var MongoStore = require('connect-mongo')(session);
+
+
+//var Cart = require('cart');
+var Cart = function Cart(oldCart) {
+    this.items = oldCart.items || {};
+    this.totalQty = oldCart.totalQty || 0;
+    this.totalPrice = oldCart.totalPrice || 0;
+
+    this.add = function (item, id) {
+        var storedItem = this.items[id];
+        if (!storedItem) {
+            storedItem = this.items[id] = {item: item, qty: 0, price: 0};
+        }
+        storedItem.qty++;
+        storedItem.price = storedItem.item.price * storedItem.qty;
+        this.totalQty++;
+        this.totalPrice += storedItem.item.price;
+    };
+
+    this.reduceByOne = function (id) {
+        this.items[id].qty--;
+        this.items[id].price -= this.items[id].item.price;
+        this.totalQty--;
+        this.totalPrice -= this.items[id].item.price;
+
+        if(this.items[id].qty <= 0) {
+            delete this.items[id];
+        }
+    };
+
+    this.removeItem = function (id) {
+        this.totalQty -= this.items[id].qty;
+        this.totalPrice -= this.items[id].price;
+        delete this.items[id];
+    };
+
+    this.generateArray = function () {
+        var arr = [];
+        for (var id in this.items) {
+            arr.push(this.items[id]);
+        }
+        return arr;
+    };
+};
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.engine('html', require('ejs').renderFile);
@@ -20,6 +74,42 @@ var Post = mongoose.model('Post', postSchema);
 
 var productSchema = new mongoose.Schema({ name: String, description: String, price: {type: Number, min: 1, required: [true,'Please enter price']}, qty: Number, img: String });
 var Product = mongoose.model('Product', productSchema);
+
+
+
+//configure the session
+//add a new MongoStore.  Connect to the existing connection
+//Set the timeout of the session cookie 180 minutes, 60 seconds, //1000 milliseconds  (*Remove after 3 hours*)
+app.use(session({
+   secret: 'mysecret',
+   resave: false,
+   saveUninitialized: false,
+   store: new MongoStore({ mongooseConnection: mongoose.connection }),
+   cookie: {maxAge: 180 * 60 * 1000}
+}));
+
+
+//make sure that I can access the session without importing it each time.
+app.use(function(req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+  });
+  
+  app.get('/add-to-cart/:id', function (req, res) {
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    Product.findById(productId, function (err, product) {
+        if(err) {
+            return res.redirect('/');
+        }
+        cart.add(product, product.id);
+        req.session.cart = cart;
+        console.log(req.session.cart);
+        res.redirect('/');
+    })
+});
 
 
 //import products from "./routes/products"

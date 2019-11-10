@@ -5,6 +5,7 @@ body {
 }
 
 img {
+    object-fit: cover;
     height: 230px;
 }
 
