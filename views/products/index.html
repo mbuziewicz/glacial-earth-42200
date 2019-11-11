@@ -38,7 +38,9 @@
                 </div>
             </form>
             <a href="/cart"><i class="shopping-cart"></i></span></a>
+            <% if session.cart.totalQty.length > 0 { %>
             <span class="badge badge-pill badge-secondary">Cart: <%= session.cart.totalQty %></span>
+            <% } %>
         </nav>
 
            
