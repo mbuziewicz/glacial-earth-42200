@@ -16,7 +16,7 @@
     "express-session": "^1.17.0",
     "express-validator": "^6.2.0",
     "http-errors": "~1.6.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jquery-ui": "^1.12.1",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.4",
